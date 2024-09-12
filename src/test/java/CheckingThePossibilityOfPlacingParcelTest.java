@@ -11,15 +11,15 @@ public class CheckingThePossibilityOfPlacingParcelTest {
     @Test
     public void allCanBePlaced() {
         List<Parcel> parcels = new ArrayList<>() {{
-            add(new Parcel(new String[] { "1" }));
-            add(new Parcel(new String[] { "22" }));
-            add(new Parcel(new String[] { "333" }));
-            add(new Parcel(new String[] { "4444" }));
-            add(new Parcel(new String[] { "55555" }));
-            add(new Parcel(new String[] { "666", "666" }));
-            add(new Parcel(new String[] { "777", "7777" }));
-            add(new Parcel(new String[] { "8888", "8888" }));
-            add(new Parcel(new String[] { "999", "999", "999" }));
+            add(new Parcel(List.of("1")));
+            add(new Parcel(List.of("22")));
+            add(new Parcel(List.of("333")));
+            add(new Parcel(List.of("4444")));
+            add(new Parcel(List.of("55555")));
+            add(new Parcel(List.of("666", "666")));
+            add(new Parcel(List.of("777", "7777")));
+            add(new Parcel(List.of("8888", "8888")));
+            add(new Parcel(List.of("999", "999", "999")));
         }};
 
         Truck truck = new Truck(6, 6);
@@ -32,10 +32,10 @@ public class CheckingThePossibilityOfPlacingParcelTest {
     @Test
     public void allCannotBePlaced() {
         List<Parcel> parcels = new ArrayList<>() {{
-            add(new Parcel(new String[] { "666", "666" }));
-            add(new Parcel(new String[] { "777", "7777" }));
-            add(new Parcel(new String[] { "8888", "8888" }));
-            add(new Parcel(new String[] { "999", "999", "999" }));
+            add(new Parcel(List.of("666", "666")));
+            add(new Parcel(List.of("777", "7777")));
+            add(new Parcel(List.of("8888", "8888")));
+            add(new Parcel(List.of("999", "999", "999")));
         }};
 
         Truck truck = new Truck(6, 6);
