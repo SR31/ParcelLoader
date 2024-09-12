@@ -20,7 +20,6 @@ public class ComplexLoadingAlgorithm implements LoadingAlgorithm {
 
         for (Parcel parcel : parcels) {
             boolean loaded = false;
-            // Пытаемся загрузить посылку в уже существующие грузовики
             for (Truck truck : trucks) {
                 if (truck.tryToLoadParcel(parcel)) {
                     loaded = true;
