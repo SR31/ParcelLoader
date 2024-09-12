@@ -5,10 +5,7 @@ import ru.liga.algorithms.LoadingAlgorithm;
 import ru.liga.algorithms.SimpleLoadingAlgorithm;
 import ru.liga.parcel.Parcel;
 import ru.liga.parcel.ParcelsParser;
-import ru.liga.truck.Truck;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Main {
