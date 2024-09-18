@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
-import ru.liga.parcel.Parcel;
-import ru.liga.truck.Truck;
+import ru.liga.parcelloader.parcel.Parcel;
+import ru.liga.parcelloader.truck.Truck;
 
 import java.util.ArrayList;
 import java.util.List;

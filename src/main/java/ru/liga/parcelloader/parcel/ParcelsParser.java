@@ -1,14 +1,9 @@
-package ru.liga.parcel;
+package ru.liga.parcelloader.parcel;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ParcelsParser {
     private final String filePath;

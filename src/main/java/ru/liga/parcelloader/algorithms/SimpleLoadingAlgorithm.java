@@ -1,7 +1,7 @@
-package ru.liga.algorithms;
+package ru.liga.parcelloader.algorithms;
 
-import ru.liga.parcel.Parcel;
-import ru.liga.truck.Truck;
+import ru.liga.parcelloader.truck.Truck;
+import ru.liga.parcelloader.parcel.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +9,10 @@ import java.util.List;
 public class SimpleLoadingAlgorithm implements LoadingAlgorithm {
     @Override
     public List<Truck> run(List<Parcel> parcels) {
-        List<Truck> trucks = new ArrayList<>();
+        List<ru.liga.parcelloader.truck.Truck> trucks = new ArrayList<>();
 
         parcels.forEach(parcel -> {
-            Truck truck = new Truck(6, 6);
+            ru.liga.parcelloader.truck.Truck truck = new ru.liga.parcelloader.truck.Truck(6, 6);
             truck.tryToLoadParcel(parcel);
             trucks.add(truck);
         });

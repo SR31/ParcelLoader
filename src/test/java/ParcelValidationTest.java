@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import ru.liga.parcel.Parcel;
+import ru.liga.parcelloader.parcel.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package ru.liga.truck;
+package ru.liga.parcelloader.truck;
 
-import ru.liga.parcel.Parcel;
+import ru.liga.parcelloader.parcel.Parcel;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

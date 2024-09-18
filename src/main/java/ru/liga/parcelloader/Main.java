@@ -1,10 +1,10 @@
-package ru.liga;
+package ru.liga.parcelloader;
 
-import ru.liga.algorithms.ComplexLoadingAlgorithm;
-import ru.liga.algorithms.LoadingAlgorithm;
-import ru.liga.algorithms.SimpleLoadingAlgorithm;
-import ru.liga.parcel.Parcel;
-import ru.liga.parcel.ParcelsParser;
+import ru.liga.parcelloader.algorithms.ComplexLoadingAlgorithm;
+import ru.liga.parcelloader.algorithms.LoadingAlgorithm;
+import ru.liga.parcelloader.algorithms.SimpleLoadingAlgorithm;
+import ru.liga.parcelloader.parcel.Parcel;
+import ru.liga.parcelloader.parcel.ParcelsParser;
 
 import java.util.*;
 

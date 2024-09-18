@@ -1,4 +1,4 @@
-package ru.liga.parcel;
+package ru.liga.parcelloader.parcel;
 
 import java.util.*;
 import java.util.stream.Collectors;
