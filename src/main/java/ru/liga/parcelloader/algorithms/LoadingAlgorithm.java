@@ -1,7 +1,7 @@
 package ru.liga.parcelloader.algorithms;
 
-import ru.liga.parcelloader.truck.Truck;
-import ru.liga.parcelloader.parcel.Parcel;
+import ru.liga.parcelloader.models.Truck;
+import ru.liga.parcelloader.models.Parcel;
 
 import java.util.List;
 
