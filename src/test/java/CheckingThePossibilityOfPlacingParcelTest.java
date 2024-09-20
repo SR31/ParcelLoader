@@ -1,11 +1,11 @@
 import org.junit.jupiter.api.Test;
-import ru.liga.parcelloader.parcel.Parcel;
-import ru.liga.parcelloader.truck.Truck;
+import ru.liga.parcelloader.models.Parcel;
+import ru.liga.parcelloader.models.Truck;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CheckingThePossibilityOfPlacingParcelTest {
     @Test
@@ -24,9 +24,10 @@ public class CheckingThePossibilityOfPlacingParcelTest {
 
         Truck truck = new Truck(6, 6);
 
-        assertTrue(parcels.stream()
-                .allMatch(parcel -> truck.parcelCanBePlaced(parcel, 0, 0))
-        );
+        assertThat(parcels
+            .stream()
+            .allMatch(parcel -> truck.parcelCanBePlaced(parcel, 0, 0))
+        ).isEqualTo(true);
     }
 
     @Test
@@ -39,10 +40,11 @@ public class CheckingThePossibilityOfPlacingParcelTest {
         }};
 
         Truck truck = new Truck(6, 6);
-        truck.tryToLoadParcel(parcels.get(1));
+        truck.loadParcel(parcels.get(1));
 
-        assertTrue(parcels.stream()
+        assertThat(parcels
+                .stream()
                 .noneMatch(parcel -> truck.parcelCanBePlaced(parcel, 3, 1))
-        );
+        ).isEqualTo(true);
     }
 }
