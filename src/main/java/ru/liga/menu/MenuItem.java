@@ -5,15 +5,14 @@ import lombok.Getter;
 public class MenuItem {
     @Getter
     private final String title;
-    private final Procedure function;
+    private final Runnable function;
 
-    public MenuItem(String title, Procedure function) {
+    public MenuItem(String title, Runnable function) {
         this.title = title;
         this.function = function;
     }
 
     public void process() {
-        function.execute();
+        function.run();
     }
-
 }
