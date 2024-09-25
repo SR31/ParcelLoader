@@ -1,3 +1,5 @@
+package ru.liga.parcelloader;
+
 import ru.liga.menu.Menu;
 import ru.liga.menu.MenuItem;
 import ru.liga.parcelloader.algorithms.*;
