@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Main {
+public class ParcelLoaderMenu {
     public static void main(String[] args) {
         AtomicReference<LoadingAlgorithm> loadingAlgorithm = new AtomicReference<>();
         AtomicReference<Optional<List<Truck>>> trucks = new AtomicReference<>();

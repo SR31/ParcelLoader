@@ -21,7 +21,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ru.liga.parcelloader.Main</mainClass>
+                            <mainClass>ru.liga.parcelloader.ParcelLoaderMenu</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
