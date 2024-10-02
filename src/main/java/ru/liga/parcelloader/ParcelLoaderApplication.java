@@ -14,6 +14,7 @@ import ru.liga.parcelloader.writers.TrucksJsonWriter;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ParcelLoaderApplication {
@@ -22,6 +23,7 @@ public class ParcelLoaderApplication {
         AtomicReference<Optional<List<Truck>>> trucks = new AtomicReference<>();
         AtomicReference<Optional<Truck>> truck = new AtomicReference<>(Optional.empty());
         ValidParcelPatternsRepository validParcelPatternsRepository = new DefaultValidParcelPatterns();
+        ParcelCounter parcelCounter = new DefaultParcelCounter(validParcelPatternsRepository);
 
         Menu mainMenu = new Menu("Меню", new Scanner(System.in));
         Menu algorithmPickerMenu = new Menu("Выберите алгоритм для погрузки", new Scanner(System.in));
@@ -31,11 +33,6 @@ public class ParcelLoaderApplication {
         truckHandleMethodPickerMenu.addMenuItem(
             new MenuItem("Посчитать посылки",
                 () -> {
-                    ParcelCounter parcelCounter = new DefaultParcelCounter(
-                            validParcelPatternsRepository,
-                            new HashMap<>()
-                    );
-
                     truck
                         .get()
                         .ifPresentOrElse(value -> parcelCounter
@@ -77,6 +74,28 @@ public class ParcelLoaderApplication {
                     () -> System.out.println("Машины не были загружены")
                 )
             )
+        );
+        printOptionPickerMenu.addMenuItem(
+                new MenuItem(
+                "Вывести каждую машину на экран с подсчетом типов посылок в ней",
+                () -> {
+                    AtomicInteger truckNumber = new AtomicInteger(0);
+                    trucks
+                        .get()
+                        .ifPresentOrElse(value -> value
+                            .forEach(currentTruck -> {
+                                System.out.println("Посылки в машине №" + truckNumber.getAndIncrement() + ":");
+                                parcelCounter
+                                        .countParcelsIn(currentTruck)
+                                        .forEach((parcelType, count) -> {
+                                            System.out.println(validParcelPatternsRepository.getParcelById(parcelType));
+                                            System.out.println("В количестве: " + count + " шт.");
+                                        });
+                                System.out.println();
+                            }),
+                            () -> System.out.println("Машины не были погружены")
+                        );
+                })
         );
 
         algorithmPickerMenu.addMenuItem(

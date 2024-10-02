@@ -6,16 +6,12 @@ import ru.liga.parcelloader.models.Parcel;
 import ru.liga.parcelloader.models.Truck;
 import ru.liga.parcelloader.repository.ValidParcelPatternsRepository;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Log4j2
 public class DefaultParcelCounter implements ParcelCounter {
     private static final char EMPTY_SPACE_CHAR = ' ';
 
-    private final Map<String, Integer> parcelCountsMap;
     private final ValidParcelPatternsRepository validParcelPatternsRepository;
     private final Set<Map.Entry<String, Parcel>> validParcelForms;
     private char[][] truckGrid;
@@ -23,17 +19,15 @@ public class DefaultParcelCounter implements ParcelCounter {
     /**
      * Создает экземпляр класса для подсчета посылок в машине
      * @param validParcelPatternsRepository репозиторий с правильными формами посылок
-     * @param parcelCountsMap объект Map, куда будут записан результат
      */
-    public DefaultParcelCounter(ValidParcelPatternsRepository validParcelPatternsRepository,
-                                Map<String, Integer> parcelCountsMap) {
-        this.parcelCountsMap = parcelCountsMap;
+    public DefaultParcelCounter(ValidParcelPatternsRepository validParcelPatternsRepository) {
         this.validParcelPatternsRepository = validParcelPatternsRepository;
         this.validParcelForms = validParcelPatternsRepository.getPatterns().entrySet();
     }
 
     @Override
     public Map<String, Integer> countParcelsIn(Truck truck) {
+        Map<String, Integer> parcelCountsMap = new HashMap<>();
         log.debug("Initial truck's state\n{}", truck);
         truckGrid = truck.getGrid();
 
