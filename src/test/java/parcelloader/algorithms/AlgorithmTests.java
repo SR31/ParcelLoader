@@ -1,3 +1,5 @@
+package parcelloader.algorithms;
+
 import org.junit.jupiter.api.Test;
 import ru.liga.parcelloader.algorithms.MaxFillingTrucksAlgorithm;
 import ru.liga.parcelloader.algorithms.OneParcelOneTruckAlgorithm;
@@ -26,7 +28,7 @@ public class AlgorithmTests {
             add(new Parcel(List.of("999", "999", "999")));
         }};
 
-        List<Truck> trucks = new OneParcelOneTruckAlgorithm().run(parcels);
+        List<Truck> trucks = new OneParcelOneTruckAlgorithm().load(parcels);
 
         assertThat(
                 trucks
@@ -59,7 +61,7 @@ public class AlgorithmTests {
             add(new Parcel(List.of("999", "999", "999")));
         }};
 
-        List<Truck> trucks = new MaxFillingTrucksAlgorithm().run(parcels);
+        List<Truck> trucks = new MaxFillingTrucksAlgorithm().load(parcels);
 
         assertThat(
                 trucks
@@ -77,7 +79,7 @@ public class AlgorithmTests {
             add(new Parcel(List.of("666", "666")));
         }};
 
-        List<Truck> trucks = new SameParcelsWeightAlgorithm(2).run(parcels);
+        List<Truck> trucks = new SameParcelsWeightAlgorithm(2).load(parcels);
 
         assertThat(trucks.get(0).getWeight())
                 .isEqualTo(5);
@@ -101,7 +103,7 @@ public class AlgorithmTests {
         }};
 
         assertThatThrownBy(
-                () -> new SameParcelsWeightAlgorithm(2).run(parcels)
+                () -> new SameParcelsWeightAlgorithm(2).load(parcels)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

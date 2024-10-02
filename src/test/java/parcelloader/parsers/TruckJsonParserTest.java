@@ -1,3 +1,5 @@
+package parcelloader.parsers;
+
 import com.google.gson.JsonSyntaxException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -21,7 +23,7 @@ public class TruckJsonParserTest {
     @Test
     public void jsonParserShouldWorkProperly() throws IOException {
         assertThat(
-            truckFileParser.parse("./src/test/resources/truck1.json").toString()
+            truckFileParser.parse("./src/test/resources/truck_valid.json").toString()
         ).isEqualTo(new Truck(new char[][] {
             { ' ', ' ', ' ', ' ', ' ', ' ' },
             { ' ', ' ', ' ', ' ', ' ', ' ' },
@@ -35,7 +37,7 @@ public class TruckJsonParserTest {
 
     @Test
     public void jsonParserShouldThrowError() {
-        assertThatThrownBy(() -> truckFileParser.parse("./src/test/resources/truck2.json"))
+        assertThatThrownBy(() -> truckFileParser.parse("./src/test/resources/truck_invalid.json"))
                 .isInstanceOf(JsonSyntaxException.class);
     }
 }

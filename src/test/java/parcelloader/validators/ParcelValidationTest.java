@@ -1,6 +1,9 @@
+package parcelloader.validators;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.liga.parcelloader.models.Parcel;
+import ru.liga.parcelloader.repository.DefaultValidParcelPatterns;
 import ru.liga.parcelloader.validators.ParcelFormValidator;
 import ru.liga.parcelloader.validators.Validator;
 
@@ -13,7 +16,9 @@ public class ParcelValidationTest {
     public static Validator<Parcel> parcelFormValidator;
     @BeforeAll
     public static void before() {
-        parcelFormValidator = new ParcelFormValidator();
+        parcelFormValidator = new ParcelFormValidator(
+                new DefaultValidParcelPatterns()
+        );
     }
 
     @Test
