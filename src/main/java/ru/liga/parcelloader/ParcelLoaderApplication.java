@@ -1,40 +1,47 @@
 package ru.liga.parcelloader;
 
-import ru.liga.menu.Menu;
-import ru.liga.menu.MenuItem;
+import ru.liga.menu.model.Menu;
+import ru.liga.menu.model.MenuItem;
 import ru.liga.parcelloader.algorithms.*;
+import ru.liga.parcelloader.counters.DefaultParcelCounter;
 import ru.liga.parcelloader.counters.ParcelCounter;
-import ru.liga.parcelloader.counters.ParcelsCounterImpl;
 import ru.liga.parcelloader.models.*;
 import ru.liga.parcelloader.parsers.*;
+import ru.liga.parcelloader.repository.DefaultValidParcelPatterns;
+import ru.liga.parcelloader.repository.ValidParcelPatternsRepository;
+import ru.liga.parcelloader.validators.ParcelFormValidator;
 import ru.liga.parcelloader.writers.TrucksJsonWriter;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class ParcelLoaderMenu {
+public class ParcelLoaderApplication {
     public static void main(String[] args) {
         AtomicReference<LoadingAlgorithm> loadingAlgorithm = new AtomicReference<>();
         AtomicReference<Optional<List<Truck>>> trucks = new AtomicReference<>();
         AtomicReference<Optional<Truck>> truck = new AtomicReference<>(Optional.empty());
+        ValidParcelPatternsRepository validParcelPatternsRepository = new DefaultValidParcelPatterns();
 
-        Menu mainMenu = new Menu("Меню");
-        Menu algorithmPickerMenu = new Menu("Выберите алгоритм для погрузки");
-        Menu printOptionPickerMenu = new Menu("Выберите, что нужно сделать с результатом");
-        Menu truckHandleMethodPickerMenu = new Menu("Вымерите, что нужно сделать с машиной");
+        Menu mainMenu = new Menu("Меню", new Scanner(System.in));
+        Menu algorithmPickerMenu = new Menu("Выберите алгоритм для погрузки", new Scanner(System.in));
+        Menu printOptionPickerMenu = new Menu("Выберите, что нужно сделать с результатом", new Scanner(System.in));
+        Menu truckHandleMethodPickerMenu = new Menu("Вымерите, что нужно сделать с машиной", new Scanner(System.in));
 
         truckHandleMethodPickerMenu.addMenuItem(
             new MenuItem("Посчитать посылки",
                 () -> {
-                    ParcelCounter parcelCounter = new ParcelsCounterImpl();
+                    ParcelCounter parcelCounter = new DefaultParcelCounter(
+                            validParcelPatternsRepository,
+                            new HashMap<>()
+                    );
 
                     truck
                         .get()
                         .ifPresentOrElse(value -> parcelCounter
-                                .countParcelsInTruck(value)
+                                .countParcelsIn(value)
                                 .forEach((parcelType, count) -> {
-                                    System.out.println(parcelCounter.getParcelById(parcelType));
+                                    System.out.println(validParcelPatternsRepository.getParcelById(parcelType));
                                     System.out.println("В количестве: " + count + " шт.");
                                 }),
                             () -> System.out.println("Машина не была загружена")
@@ -100,7 +107,9 @@ public class ParcelLoaderMenu {
                 System.out.print("Введите путь до файла с посылками: ");
                 Scanner scanner = new Scanner(System.in);
                 String line = scanner.nextLine();
-                FileParser<List<Parcel>> parcelsParser = new ParcelsTxtParser();
+                FileParser<List<Parcel>> parcelsParser = new ParcelsTxtParser(
+                        new ParcelFormValidator(validParcelPatternsRepository)
+                );
                 List<Parcel> parcels;
 
                 try {
@@ -110,18 +119,19 @@ public class ParcelLoaderMenu {
                     return;
                 }
 
-                algorithmPickerMenu.run();
+                algorithmPickerMenu.show();
                 if (!algorithmPickerMenu.isRunning())
                     return;
 
                 trucks.set(
                         Optional.ofNullable(loadingAlgorithm
-                        .get()
-                        .run(parcels))
+                            .get()
+                            .load(parcels)
+                        )
                 );
 
                 do {
-                    printOptionPickerMenu.run();
+                    printOptionPickerMenu.show();
                 } while (printOptionPickerMenu.isRunning());
             })
         );
@@ -141,14 +151,14 @@ public class ParcelLoaderMenu {
                 }
 
                 System.out.println("Загруженная машина из файла:");
-                System.out.println(truck.get());
+                System.out.println(truck.get().get());
 
-                truckHandleMethodPickerMenu.run();
+                truckHandleMethodPickerMenu.show();
             })
         );
 
         do {
-            mainMenu.run();
+            mainMenu.show();
         } while (mainMenu.isRunning());
     }
 }
