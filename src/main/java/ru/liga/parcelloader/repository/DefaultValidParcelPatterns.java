@@ -2,15 +2,13 @@ package ru.liga.parcelloader.repository;
 
 import ru.liga.parcelloader.models.Parcel;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
-public class BasicFormsOfParcel implements ValidFormsOfParcelRepository {
-    private final List<Parcel> availableParcelForms = new ArrayList<>();
+public class DefaultValidParcelPatterns implements ValidParcelPatternsRepository {
+    private static final Map<String, Parcel> availableParcelForms = new HashMap<>();
 
-    public BasicFormsOfParcel() {
+    static {
         Stream.of(
                         "1",
                         "22",
@@ -25,16 +23,16 @@ public class BasicFormsOfParcel implements ValidFormsOfParcelRepository {
                 )
                 .map(element -> element.split("\n"))
                 .map(element -> Arrays.stream(element).toList())
-                .forEach(element -> availableParcelForms.add(new Parcel(element)));
+                .forEach(element -> availableParcelForms.put(element.get(0).substring(0, 1), new Parcel(element)));
     }
 
     @Override
-    public List<Parcel> getForms() {
-        return availableParcelForms;
+    public Map<String, Parcel> getPatterns() {
+        return new HashMap<>(availableParcelForms);
     }
     
     @Override
-    public Parcel getParcel(int i) {
-        return availableParcelForms.get(i);
+    public Parcel getParcelById(String id) {
+        return availableParcelForms.get(id);
     }
 }
