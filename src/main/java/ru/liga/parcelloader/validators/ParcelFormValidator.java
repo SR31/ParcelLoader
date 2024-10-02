@@ -1,24 +1,20 @@
 package ru.liga.parcelloader.validators;
 
 import ru.liga.parcelloader.models.Parcel;
-import ru.liga.parcelloader.repository.BasicFormsOfParcel;
-import ru.liga.parcelloader.repository.ValidFormsOfParcelRepository;
+import ru.liga.parcelloader.repository.ValidParcelPatternsRepository;
 
 public class ParcelFormValidator implements Validator<Parcel> {
-    private final ValidFormsOfParcelRepository validFormsOfParcelRepository;
+    private final ValidParcelPatternsRepository validParcelPatternsRepository;
 
-    public ParcelFormValidator(ValidFormsOfParcelRepository validFormsOfParcelRepository) {
-        this.validFormsOfParcelRepository = validFormsOfParcelRepository;
-    }
-
-    public ParcelFormValidator() {
-        this(new BasicFormsOfParcel());
+    public ParcelFormValidator(ValidParcelPatternsRepository validParcelPatternsRepository) {
+        this.validParcelPatternsRepository = validParcelPatternsRepository;
     }
 
     @Override
     public boolean isValid(Parcel parcel) {
-        return validFormsOfParcelRepository
-                .getForms()
+        return validParcelPatternsRepository
+                .getPatterns()
+                .values()
                 .stream()
                 .anyMatch(parcel::equals);
     }

@@ -5,24 +5,40 @@ import ru.liga.parcelloader.models.Truck;
 import ru.liga.parcelloader.models.Parcel;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Log4j2
 public class MaxFillingTrucksAlgorithm implements LoadingAlgorithm {
-    public List<Truck> run(List<Parcel> parcels) {
+    /**
+     * {@inheritDoc}
+     * <br>
+     * Максимальная укомплектовка машин
+     * Машин при погрузке может быть неограниченное количество
+     */
+    public List<Truck> load(List<Parcel> parcels) {
         List<Truck> trucks = new ArrayList<>();
         trucks.add(new Truck());
 
-        parcels = sortedByWidthAndHeight(parcels);
+        parcels.sort(
+                Comparator
+                    .comparing(Parcel::getHeight)
+                    .thenComparing(Parcel::getWidth)
+        );
+        Collections.reverse(parcels);
 
-        parcelsLoop:
         for (Parcel parcel : parcels) {
+            boolean isParcelLoaded = false;
+
             for (Truck truck : trucks) {
                 if (truck.loadParcel(parcel)) {
-                    continue parcelsLoop;
+                    isParcelLoaded = true;
+                    break;
                 }
+
                 log.debug("Parcel doesn't fit in truck\n{}\n{}", parcel, truck);
             }
+
+            if (isParcelLoaded)
+                continue;
 
             Truck newTruck = new Truck();
             newTruck.loadParcel(parcel);
@@ -30,20 +46,5 @@ public class MaxFillingTrucksAlgorithm implements LoadingAlgorithm {
         }
 
         return trucks;
-    }
-
-    protected List<Parcel> sortedByWidthAndHeight(List<Parcel> parcels) {
-        parcels = parcels
-                .stream()
-                .sorted(
-                        Comparator
-                                .comparing(Parcel::getHeight)
-                                .thenComparing(Parcel::getWidth)
-                )
-                .collect(Collectors.toCollection(ArrayList::new));
-
-        Collections.reverse(parcels);
-
-        return parcels;
     }
 }

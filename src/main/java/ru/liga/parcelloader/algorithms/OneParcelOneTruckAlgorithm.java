@@ -7,8 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OneParcelOneTruckAlgorithm implements LoadingAlgorithm {
+    /**
+     * {@inheritDoc}
+     * <br>
+     * Погрузка одной посылки в одну машину
+     * Машин при погрузке может быть неограниченное количество
+     */
     @Override
-    public List<Truck> run(List<Parcel> parcels) {
+    public List<Truck> load(List<Parcel> parcels) {
         List<Truck> trucks = new ArrayList<>();
 
         parcels.forEach(parcel -> {

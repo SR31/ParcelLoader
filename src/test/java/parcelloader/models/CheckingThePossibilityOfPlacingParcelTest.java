@@ -1,3 +1,5 @@
+package parcelloader.models;
+
 import org.junit.jupiter.api.Test;
 import ru.liga.parcelloader.models.Parcel;
 import ru.liga.parcelloader.models.Truck;

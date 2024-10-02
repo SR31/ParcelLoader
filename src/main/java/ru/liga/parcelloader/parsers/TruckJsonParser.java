@@ -11,6 +11,12 @@ import java.nio.file.Path;
 public class TruckJsonParser implements FileParser<Truck> {
     private static final Gson gson = new Gson();
 
+    /**
+     *
+     * @param filePath путь к файлу, который нужно спарсить
+     * @return объект {@link Truck}
+     * @throws IOException ошибка, возникшая при чтении файла
+     */
     @Override
     public Truck parse(String filePath) throws IOException {
         return gson.fromJson(Files.readString(Path.of(filePath), StandardCharsets.UTF_8), Truck.class);

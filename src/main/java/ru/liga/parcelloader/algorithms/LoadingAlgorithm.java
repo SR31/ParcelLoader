@@ -6,5 +6,10 @@ import ru.liga.parcelloader.models.Parcel;
 import java.util.List;
 
 public interface LoadingAlgorithm {
-    List<Truck> run(List<Parcel> parcels);
+    /**
+     * Грузит посылки по машинам
+     * @param parcels посылки, которые нужно погрузить
+     * @return список машин с погруженными посылками
+     */
+    List<Truck> load(List<Parcel> parcels);
 }
