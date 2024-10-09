@@ -24,7 +24,7 @@ public class ParcelCounterTest {
         });
 
         Map<String, Integer> parcelsCount = new DefaultParcelCounter(
-                new DefaultValidParcelPatterns(), new HashMap<>()
+                new DefaultValidParcelPatterns()
         ).countParcelsIn(truck);
 
         assertThat(parcelsCount).isEqualTo(
