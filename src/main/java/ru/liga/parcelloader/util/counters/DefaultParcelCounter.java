@@ -1,94 +1,145 @@
 package ru.liga.parcelloader.util.counters;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ru.liga.parcelloader.data.repository.ParcelRepository;
 import ru.liga.parcelloader.type.exception.NotSupportedParcelSymbol;
-import ru.liga.parcelloader.type.model.Parcel;
 import ru.liga.parcelloader.type.model.Truck;
-import ru.liga.parcelloader.data.repository.ValidParcelPatternsRepository;
+import ru.liga.parcelloader.type.model.entity.parcel.Layer;
+import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 
 import java.util.*;
 
 @Log4j2
+@Component
+@AllArgsConstructor
 public class DefaultParcelCounter implements ParcelCounter {
     private static final char EMPTY_SPACE_CHAR = ' ';
 
-    private final ValidParcelPatternsRepository validParcelPatternsRepository;
-    private final Set<Map.Entry<String, Parcel>> validParcelForms;
-    private char[][] truckGrid;
-
-    /**
-     * Создает экземпляр класса для подсчета посылок в машине
-     * @param validParcelPatternsRepository репозиторий с правильными формами посылок
-     */
-    public DefaultParcelCounter(ValidParcelPatternsRepository validParcelPatternsRepository) {
-        this.validParcelPatternsRepository = validParcelPatternsRepository;
-        this.validParcelForms = validParcelPatternsRepository.getPatterns().entrySet();
-    }
+    @Autowired
+    private final ParcelRepository parcelRepository;
 
     @Override
     public Map<String, Integer> countParcelsIn(Truck truck) {
+        char[][] truckGrid = truck.getGrid();
         Map<String, Integer> parcelCountsMap = new HashMap<>();
         log.debug("Initial truck's state\n{}", truck);
-        truckGrid = truck.getGrid();
+        List<Parcel> potentialParcels = getPotentialParcels(truckGrid);
+        potentialParcels.forEach(System.out::println);
 
         for (int y = 0; y < truck.getHeight(); y++) {
             for (int x = 0; x < truck.getWidth(); x++) {
                 char currentChar = truckGrid[truck.getHeight() - y - 1][x];
-
                 if (currentChar == EMPTY_SPACE_CHAR) {
                     continue;
                 }
 
-                Optional<String> parcelPatternId = findParcelPatternIdAt(x, y);
-
-                if (parcelPatternId.isEmpty()) {
+                Parcel parcel = findParcelByFillingSymbol(potentialParcels, currentChar);
+                if (parcel == null || !isParcelFormCorrectAt(x, y, parcel, truckGrid)) {
                     throw new NotSupportedParcelSymbol(currentChar);
                 }
 
-                int parcelCount = parcelCountsMap.getOrDefault(parcelPatternId.get(), 0);
-                parcelCountsMap.put(parcelPatternId.get(), parcelCount + 1);
-                removeParcelInTruckAt(x, y, validParcelPatternsRepository.getParcelById(parcelPatternId.get()));
+                incrementParcelCount(parcelCountsMap, parcel.getName());
+                removeParcelInTruckAt(x, y, parcel, truckGrid);
             }
         }
 
         return parcelCountsMap;
     }
 
-    private Optional<String> findParcelPatternIdAt(int x, int y) {
-        return validParcelForms
-                .stream()
-                .filter(entry -> isTruckContainParcelAt(x, y, entry.getValue()))
-                .findFirst()
-                .map(Map.Entry::getKey);
-    }
-
-    private boolean isTruckContainParcelAt(int x, int y, Parcel parcel) {
+    public boolean isParcelFormCorrectAt(int x, int y, Parcel parcel, char[][] truckGrid) {
         if (truckGrid.length < y + parcel.getHeight()
-                || truckGrid[0].length < x + parcel.getWidth())
+            || truckGrid[0].length < x + parcel.getWidth()
+        ) {
             return false;
+        }
 
-        for (int parcelLayer = 0; parcelLayer < parcel.getHeight(); parcelLayer++) {
-            if (
-                    Arrays.compare(
-                            truckGrid[truckGrid.length - y - parcelLayer - 1],
-                            x, x + parcel.getLayer(parcelLayer).length,
-                            parcel.getLayer(parcelLayer),
-                            0, parcel.getLayer(parcelLayer).length
-                    ) != 0
-            ) {
-                return false;
+        int offset = getParcelOffset(parcel);
+        int layersCount = parcel.getShape().getLayers().size();
+        int truckHeight = truckGrid.length;
+        int truckX = x - offset;
+
+        for (int parcelY = 0; parcelY < layersCount; parcelY++) {
+            String layerContent = parcel
+                    .getShapeLayer(layersCount - parcelY - 1)
+                    .getContent();
+
+            for (int parcelX = 0; parcelX < layerContent.length(); parcelX++) {
+                if (layerContent.charAt(parcelX) != EMPTY_SPACE_CHAR) {
+                    if (truckGrid[truckHeight - y - parcelY - 1][truckX + parcelX] != parcel.getFillingSymbol()) {
+                        return false;
+                    }
+                }
             }
         }
 
         return true;
     }
 
-    private void removeParcelInTruckAt(int fromX, int fromY, Parcel parcel) {
-        for (int parcelLayer = 0; parcelLayer < parcel.getHeight(); parcelLayer++) {
-            Arrays.fill(
-                    truckGrid[truckGrid.length - fromY - parcelLayer - 1],
-                    fromX, fromX + parcel.getLayer(parcelLayer).length, ' '
-            );
+    private void removeParcelInTruckAt(int x, int y, Parcel parcel, char[][] truckGrid) {
+        int offset = getParcelOffset(parcel);
+        int layersCount = parcel.getShape().getLayers().size();
+        int truckHeight = truckGrid.length;
+        int truckX = x - offset;
+
+        for (int parcelY = 0; parcelY < layersCount; parcelY++) {
+            String layerContent = parcel
+                    .getShapeLayer(layersCount - parcelY - 1)
+                    .getContent();
+
+            for (int parcelX = 0; parcelX < layerContent.length(); parcelX++) {
+                if (layerContent.charAt(parcelX) != EMPTY_SPACE_CHAR) {
+                    truckGrid[truckHeight - y - parcelY - 1][truckX + parcelX] = EMPTY_SPACE_CHAR;
+                }
+            }
         }
+    }
+
+    private List<Parcel> getPotentialParcels(char[][] truckGrid) {
+        Set<Character> uniqueSymbols = new HashSet<>();
+        for (char[] chars : truckGrid) {
+            for (char symbol : chars) {
+                if (symbol != EMPTY_SPACE_CHAR) {
+                    uniqueSymbols.add(symbol);
+                }
+            }
+        }
+
+        List<Character> uniqueSymbolsList = uniqueSymbols
+                    .stream()
+                    .toList();
+        return parcelRepository.findAllByFillingSymbolIn(uniqueSymbolsList);
+    }
+
+    private Parcel findParcelByFillingSymbol(List<Parcel> potentialParcels, char fillingSymbol) {
+        return potentialParcels
+                .stream()
+                .filter(parcel -> parcel.getFillingSymbol() == fillingSymbol)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private int getParcelOffset(Parcel parcel) {
+        int offset = 0;
+
+        int layersCount = parcel.getShape().getLayers().size();
+        Layer lastLayer = parcel.getShapeLayer(layersCount - 1);
+        String layerContent = lastLayer.getContent();
+
+        for (int i = 0; i < layerContent.length(); i++) {
+            if (layerContent.charAt(i) != EMPTY_SPACE_CHAR) {
+                break;
+            }
+            offset++;
+        }
+
+        return offset;
+    }
+
+    private void incrementParcelCount(Map<String, Integer> parcelCountsMap, String parcelName) {
+        int parcelCount = parcelCountsMap.getOrDefault(parcelName, 0);
+        parcelCountsMap.put(parcelName, parcelCount + 1);
     }
 }
