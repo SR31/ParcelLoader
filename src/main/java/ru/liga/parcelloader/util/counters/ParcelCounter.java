@@ -1,6 +1,6 @@
-package ru.liga.parcelloader.counters;
+package ru.liga.parcelloader.util.counters;
 
-import ru.liga.parcelloader.models.Truck;
+import ru.liga.parcelloader.type.model.Truck;
 
 import java.util.Map;
 

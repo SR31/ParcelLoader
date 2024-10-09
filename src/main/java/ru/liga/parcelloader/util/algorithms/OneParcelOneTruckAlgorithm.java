@@ -1,7 +1,7 @@
-package ru.liga.parcelloader.algorithms;
+package ru.liga.parcelloader.util.algorithms;
 
-import ru.liga.parcelloader.models.Truck;
-import ru.liga.parcelloader.models.Parcel;
+import ru.liga.parcelloader.type.model.Truck;
+import ru.liga.parcelloader.type.model.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;

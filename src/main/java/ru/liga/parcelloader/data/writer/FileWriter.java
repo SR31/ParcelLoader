@@ -1,4 +1,4 @@
-package ru.liga.parcelloader.writers;
+package ru.liga.parcelloader.data.writer;
 
 import java.io.IOException;
 

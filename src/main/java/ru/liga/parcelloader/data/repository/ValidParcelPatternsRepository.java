@@ -1,8 +1,7 @@
-package ru.liga.parcelloader.repository;
+package ru.liga.parcelloader.data.repository;
 
-import ru.liga.parcelloader.models.Parcel;
+import ru.liga.parcelloader.type.model.Parcel;
 
-import java.util.List;
 import java.util.Map;
 
 public interface ValidParcelPatternsRepository {

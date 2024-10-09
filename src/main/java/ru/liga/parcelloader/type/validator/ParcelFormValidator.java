@@ -1,7 +1,7 @@
-package ru.liga.parcelloader.validators;
+package ru.liga.parcelloader.type.validator;
 
-import ru.liga.parcelloader.models.Parcel;
-import ru.liga.parcelloader.repository.ValidParcelPatternsRepository;
+import ru.liga.parcelloader.type.model.Parcel;
+import ru.liga.parcelloader.data.repository.ValidParcelPatternsRepository;
 
 public class ParcelFormValidator implements Validator<Parcel> {
     private final ValidParcelPatternsRepository validParcelPatternsRepository;

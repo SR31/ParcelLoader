@@ -1,4 +1,4 @@
-package ru.liga.parcelloader.parsers;
+package ru.liga.parcelloader.data.parser;
 
 import java.io.IOException;
 

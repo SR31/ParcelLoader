@@ -1,4 +1,4 @@
-package ru.liga.parcelloader.validators;
+package ru.liga.parcelloader.type.validator;
 
 public interface Validator<T> {
     /**

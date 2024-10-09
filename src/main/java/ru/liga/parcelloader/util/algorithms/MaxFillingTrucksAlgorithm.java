@@ -1,8 +1,8 @@
-package ru.liga.parcelloader.algorithms;
+package ru.liga.parcelloader.util.algorithms;
 
 import lombok.extern.log4j.Log4j2;
-import ru.liga.parcelloader.models.Truck;
-import ru.liga.parcelloader.models.Parcel;
+import ru.liga.parcelloader.type.model.Truck;
+import ru.liga.parcelloader.type.model.Parcel;
 
 import java.util.*;
 

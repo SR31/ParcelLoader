@@ -1,10 +1,10 @@
-package ru.liga.parcelloader.counters;
+package ru.liga.parcelloader.util.counters;
 
 import lombok.extern.log4j.Log4j2;
-import ru.liga.parcelloader.exception.NotSupportedParcelSymbol;
-import ru.liga.parcelloader.models.Parcel;
-import ru.liga.parcelloader.models.Truck;
-import ru.liga.parcelloader.repository.ValidParcelPatternsRepository;
+import ru.liga.parcelloader.type.exception.NotSupportedParcelSymbol;
+import ru.liga.parcelloader.type.model.Parcel;
+import ru.liga.parcelloader.type.model.Truck;
+import ru.liga.parcelloader.data.repository.ValidParcelPatternsRepository;
 
 import java.util.*;
 

@@ -1,7 +1,7 @@
-package ru.liga.parcelloader.parsers;
+package ru.liga.parcelloader.data.parser;
 
 import com.google.gson.Gson;
-import ru.liga.parcelloader.models.Truck;
+import ru.liga.parcelloader.type.model.Truck;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

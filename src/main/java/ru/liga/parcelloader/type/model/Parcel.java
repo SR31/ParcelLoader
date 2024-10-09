@@ -1,4 +1,4 @@
-package ru.liga.parcelloader.models;
+package ru.liga.parcelloader.type.model;
 
 import java.util.*;
 import java.util.stream.Collectors;

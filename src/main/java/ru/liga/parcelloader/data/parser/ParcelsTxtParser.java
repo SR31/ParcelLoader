@@ -1,9 +1,7 @@
-package ru.liga.parcelloader.parsers;
+package ru.liga.parcelloader.data.parser;
 
-import ru.liga.parcelloader.models.Parcel;
-import ru.liga.parcelloader.models.Truck;
-import ru.liga.parcelloader.validators.ParcelFormValidator;
-import ru.liga.parcelloader.validators.Validator;
+import ru.liga.parcelloader.type.model.Parcel;
+import ru.liga.parcelloader.type.validator.Validator;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
