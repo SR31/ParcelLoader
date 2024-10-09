@@ -2,10 +2,10 @@ package parcelloader.validators;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.liga.parcelloader.models.Parcel;
-import ru.liga.parcelloader.repository.DefaultValidParcelPatterns;
-import ru.liga.parcelloader.validators.ParcelFormValidator;
-import ru.liga.parcelloader.validators.Validator;
+import ru.liga.parcelloader.type.model.Parcel;
+import ru.liga.parcelloader.data.repository.DefaultValidParcelPatterns;
+import ru.liga.parcelloader.type.validator.ParcelFormValidator;
+import ru.liga.parcelloader.type.validator.Validator;
 
 import java.util.ArrayList;
 import java.util.List;

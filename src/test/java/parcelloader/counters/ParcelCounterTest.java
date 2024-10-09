@@ -1,9 +1,9 @@
 package parcelloader.counters;
 
 import org.junit.jupiter.api.Test;
-import ru.liga.parcelloader.counters.DefaultParcelCounter;
-import ru.liga.parcelloader.models.Truck;
-import ru.liga.parcelloader.repository.DefaultValidParcelPatterns;
+import ru.liga.parcelloader.util.counters.DefaultParcelCounter;
+import ru.liga.parcelloader.type.model.Truck;
+import ru.liga.parcelloader.data.repository.DefaultValidParcelPatterns;
 
 import java.util.HashMap;
 import java.util.Map;

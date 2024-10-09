@@ -1,8 +1,8 @@
 package parcelloader.models;
 
 import org.junit.jupiter.api.Test;
-import ru.liga.parcelloader.models.Parcel;
-import ru.liga.parcelloader.models.Truck;
+import ru.liga.parcelloader.type.model.Parcel;
+import ru.liga.parcelloader.type.model.Truck;
 
 import java.util.ArrayList;
 import java.util.List;

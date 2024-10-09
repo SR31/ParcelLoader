@@ -1,11 +1,11 @@
 package parcelloader.algorithms;
 
 import org.junit.jupiter.api.Test;
-import ru.liga.parcelloader.algorithms.MaxFillingTrucksAlgorithm;
-import ru.liga.parcelloader.algorithms.OneParcelOneTruckAlgorithm;
-import ru.liga.parcelloader.algorithms.SameParcelsWeightAlgorithm;
-import ru.liga.parcelloader.models.Parcel;
-import ru.liga.parcelloader.models.Truck;
+import ru.liga.parcelloader.util.algorithms.MaxFillingTrucksAlgorithm;
+import ru.liga.parcelloader.util.algorithms.OneParcelOneTruckAlgorithm;
+import ru.liga.parcelloader.util.algorithms.SameParcelsWeightAlgorithm;
+import ru.liga.parcelloader.type.model.Parcel;
+import ru.liga.parcelloader.type.model.Truck;
 
 import java.util.ArrayList;
 import java.util.List;

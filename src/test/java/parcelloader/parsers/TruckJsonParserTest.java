@@ -3,9 +3,9 @@ package parcelloader.parsers;
 import com.google.gson.JsonSyntaxException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.liga.parcelloader.models.Truck;
-import ru.liga.parcelloader.parsers.FileParser;
-import ru.liga.parcelloader.parsers.TruckJsonParser;
+import ru.liga.parcelloader.type.model.Truck;
+import ru.liga.parcelloader.data.parser.FileParser;
+import ru.liga.parcelloader.data.parser.TruckJsonParser;
 
 import java.io.IOException;
 
