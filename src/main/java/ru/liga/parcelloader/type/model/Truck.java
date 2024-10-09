@@ -5,6 +5,10 @@ import lombok.Getter;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import ru.liga.parcelloader.api.dto.truck.TruckDTO;
+import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
+import ru.liga.parcelloader.type.model.entity.parcel.Shape;
+
 public class Truck {
     private static final int DEFAULT_WIDTH = 6;
     private static final int DEFAULT_HEIGHT = 6;
@@ -56,6 +60,12 @@ public class Truck {
         this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
+    public Truck(TruckDTO truckDTO) {
+        this.width = truckDTO.getWidth();
+        this.height = truckDTO.getHeight();
+        this.grid = truckDTO.getGrid();
+    }
+
     /**
      * Возвращает максимальную вместимость машины
      * @return {@link Integer}
@@ -69,10 +79,7 @@ public class Truck {
      * @return двумерный массив элементов {@link Character}
      */
     public char[][] getGrid() {
-        char[][] tempGrid = new char[height][width];
-        for (int i = 0; i < height; i++)
-            System.arraycopy(grid[i], 0, tempGrid[i], 0, width);
-        return tempGrid;
+        return Arrays.copyOf(grid, grid.length);
     }
 
     /**
@@ -88,8 +95,10 @@ public class Truck {
             return false;
         }
 
+        Shape shape = parcel.getShape();
+
         for (int i = 0; i < parcel.getHeight(); i++) {
-            char[] line = parcel.getLayer(parcel.getHeight() - i - 1);
+            char[] line = shape.getLayers().get(parcel.getHeight() - i - 1).getContent().toCharArray();
             for (int j = 0; j < line.length; j++) {
                 if (grid[height - y - i - 1][x + j] != ' ') {
                     return false;
@@ -115,6 +124,8 @@ public class Truck {
      * @return true, если посылка была погружена, и false, если не удалось погрузить
      */
     public boolean loadParcel(Parcel parcel) {
+        Shape shape = parcel.getShape();
+
         for (int y = 0; y < height - parcel.getHeight() + 1; y++) {
             for (int x = 0; x < width - parcel.getWidth() + 1; x++) {
                 if (grid[height - y - 1][x] != ' ') {
@@ -123,7 +134,7 @@ public class Truck {
 
                 if (parcelCanBePlaced(parcel, x, y)) {
                     for (int i = 0; i < parcel.getHeight(); i++) {
-                        char[] layer = parcel.getLayer(i);
+                        char[] layer = shape.getLayers().get(parcel.getHeight() - i - 1).getContent().toCharArray();
                         System.arraycopy(layer, 0, grid[height - y - i - 1], x, layer.length);
                     }
                     weight += parcel.getWeight();
