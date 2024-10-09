@@ -9,13 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.liga.parcelloader.api.dto.parcel.ParcelDTO;
 import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface ParcelRepository extends JpaRepository<Parcel, Integer> {
-    @Modifying
-    @Query("UPDATE Parcel SET name = :name WHERE id = :id")
-    int updateName(@Param("name") String name, @Param("id") int id);
-
-    @Modifying
-    @Query("UPDATE Parcel SET shape.id = :shapeId WHERE id = :id")
-    int updateShapeId(@Param("shapeId") int shapeId, @Param("id") int id);
+    Optional<Parcel> findByName(String name);
+    List<Parcel> findAllByFillingSymbolIn(List<Character> fillingSymbol);
 }
