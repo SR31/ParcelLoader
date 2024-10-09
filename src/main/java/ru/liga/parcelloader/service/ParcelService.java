@@ -1,20 +1,28 @@
 package ru.liga.parcelloader.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.liga.parcelloader.api.dto.parcel.ParcelDTO;
+import ru.liga.parcelloader.data.mapper.ParcelMapper;
 import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 import ru.liga.parcelloader.data.repository.ParcelRepository;
-import ru.liga.parcelloader.type.model.entity.parcel.Shape;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+/*
+ * Я пока не понял как подружить lombok и MapStruct,
+ * поэтому пришлось отказаться
+ */
+//@AllArgsConstructor(onConstructor = @__(@Autowired))
 @AllArgsConstructor
 public class ParcelService {
+    @Autowired
     private final ParcelRepository parcelRepository;
+    @Autowired
+    private final ParcelMapper parcelMapper;
 
     public List<Parcel> getAll() {
         return parcelRepository.findAll();
@@ -36,20 +44,7 @@ public class ParcelService {
         }
 
         Parcel parcel = optionalParcel.get();
-        if (parcelDTO.getName() != null) {
-            parcel.setName(parcelDTO.getName());
-        }
-        if (parcelDTO.getFillingSymbol() != null) {
-            parcel.setFillingSymbol(parcelDTO.getFillingSymbol());
-        }
-        if (parcelDTO.getShapeId() != null) {
-            parcel.setShape(Shape
-                    .builder()
-                    .id(parcelDTO.getShapeId())
-                    .build()
-            );
-        }
-
+        parcelMapper.updateParcelFromDTO(parcel, parcelDTO);
         return parcelRepository.save(parcel);
     }
 }

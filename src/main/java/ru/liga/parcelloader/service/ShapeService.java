@@ -11,9 +11,16 @@ import ru.liga.parcelloader.data.repository.ShapeRepository;
 import java.util.List;
 
 @Service
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+/*
+ * Я пока не понял как подружить lombok и MapStruct,
+ * поэтому пришлось отказаться
+ */
+//@AllArgsConstructor(onConstructor = @__(@Autowired))
+@AllArgsConstructor
 public class ShapeService {
+    @Autowired
     private final ShapeRepository shapeRepository;
+    @Autowired
     private final LayerService layerService;
 
     public Shape create(List<LayerDTO> layersDTO) {
