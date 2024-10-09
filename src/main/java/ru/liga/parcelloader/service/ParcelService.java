@@ -32,6 +32,10 @@ public class ParcelService {
         return parcelRepository.findById(id);
     }
 
+    public Optional<Parcel> getOne(String name) {
+        return parcelRepository.findByName(name);
+    }
+
     public Parcel create(ParcelDTO parcelDTO) {
         return parcelRepository.save(new Parcel(parcelDTO));
     }
