@@ -23,6 +23,12 @@ public class ShapeService {
     @Autowired
     private final LayerService layerService;
 
+    /**
+     * Создает новую форму посылки из переданных слоев
+     *
+     * @param layersDTO слои, определяющие форму посылки
+     * @return созданную форму
+     */
     public Shape create(List<LayerDTO> layersDTO) {
         Shape shape = shapeRepository.save(new Shape());
         List<Layer> layers = layerService.save(layersDTO, shape.getId());

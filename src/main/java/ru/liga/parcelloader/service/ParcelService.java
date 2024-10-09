@@ -36,6 +36,19 @@ public class ParcelService {
         return parcelRepository.save(new Parcel(parcelDTO));
     }
 
+    /**
+     * Модифицирует объект {@link Parcel}.
+     * <br>
+     * Если объекта с переданным id не существует, то создает новый
+     * с переданными полями.
+     * Если объект существует, то результатом изменения будет
+     * слияние существующего объекта и переданного
+     * (доступно изменение конкретных полей, а не всего объекта).
+     *
+     * @param parcelDTO объект, содержащий поля с новыми данными
+     * @param id идентификатор объекта для изменения
+     * @return результирующий объект {@link Parcel}
+     */
     public Parcel update(ParcelDTO parcelDTO, int id) {
         Optional<Parcel> optionalParcel = parcelRepository.findById(id);
 
@@ -45,6 +58,7 @@ public class ParcelService {
 
         Parcel parcel = optionalParcel.get();
         parcelMapper.updateParcelFromDTO(parcel, parcelDTO);
+
         return parcelRepository.save(parcel);
     }
 }
