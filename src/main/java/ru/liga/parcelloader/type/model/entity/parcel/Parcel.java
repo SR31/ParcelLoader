@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.liga.parcelloader.api.dto.parcel.ParcelDTO;
 
+import java.util.Comparator;
+import java.util.List;
+
 @Data
 @Entity
 @Builder
@@ -31,5 +34,51 @@ public class Parcel {
                 .builder()
                 .id(dto.getShapeId())
                 .build();
+    }
+
+    public Parcel(List<String> layers) {
+        this.shape = Shape
+                .builder()
+                .layers(layers
+                        .stream()
+                        .map(layer -> Layer
+                                .builder()
+                                .content(layer)
+                                .build()
+                        ).toList()
+                ).build();
+    }
+
+    public int getWidth() {
+        return shape
+                .getLayers()
+                .stream()
+                .map(Layer::getContent)
+                .map(String::length)
+                .max(Integer::compare)
+                .orElse(0);
+    }
+
+    public int getHeight() {
+        return shape
+                .getLayers()
+                .size();
+    }
+
+    public int getWeight() {
+        return shape
+                .getLayers()
+                .stream()
+                .map(Layer::getContent)
+                .map(content -> content.length() - content.codePoints()
+                        .filter(codePoint -> codePoint == ' ')
+                        .count())
+                .map(Math::toIntExact)
+                .reduce(Integer::sum)
+                .orElse(0);
+    }
+
+    public Layer getShapeLayer(int index) {
+        return shape.getLayers().get(index);
     }
 }
