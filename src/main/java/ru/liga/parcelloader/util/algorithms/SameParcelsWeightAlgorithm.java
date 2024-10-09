@@ -1,35 +1,22 @@
 package ru.liga.parcelloader.util.algorithms;
 
-import ru.liga.parcelloader.type.model.Parcel;
+import org.springframework.stereotype.Component;
+import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 import ru.liga.parcelloader.type.model.Truck;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+@Component("balanced")
 public class SameParcelsWeightAlgorithm implements LoadingAlgorithm {
-    private final int maxTruckCount;
-
-    /**
-     *
-     * @param maxTruckCount максимальное количество машин, куда будут погружены посылки
-     */
-    public SameParcelsWeightAlgorithm(int maxTruckCount) {
-        super();
-        this.maxTruckCount = maxTruckCount;
-    }
     /**
      * {@inheritDoc}
      * <br>
      * Равномерная по весу погрузка посылок по машинам
      */
     @Override
-    public List<Truck> load(List<Parcel> parcels) {
-        List<Truck> trucks = new ArrayList<>();
-        for (int i = 0; i < maxTruckCount; i++)
-            trucks.add(new Truck());
-
+    public List<Truck> load(List<Truck> trucks, List<Parcel> parcels) {
         parcels.sort(
                 Comparator
                         .comparing(Parcel::getHeight)

@@ -1,11 +1,14 @@
 package ru.liga.parcelloader.util.algorithms;
 
+import org.springframework.stereotype.Component;
+import ru.liga.parcelloader.type.annotation.TrucksGenerator;
 import ru.liga.parcelloader.type.model.Truck;
-import ru.liga.parcelloader.type.model.Parcel;
+import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Component("oneToOne")
+@TrucksGenerator
 public class OneParcelOneTruckAlgorithm implements LoadingAlgorithm {
     /**
      * {@inheritDoc}
@@ -14,8 +17,8 @@ public class OneParcelOneTruckAlgorithm implements LoadingAlgorithm {
      * Машин при погрузке может быть неограниченное количество
      */
     @Override
-    public List<Truck> load(List<Parcel> parcels) {
-        List<Truck> trucks = new ArrayList<>();
+    public List<Truck> load(List<Truck> trucks, List<Parcel> parcels) {
+        trucks.clear();
 
         parcels.forEach(parcel -> {
             Truck truck = new Truck(6, 6);

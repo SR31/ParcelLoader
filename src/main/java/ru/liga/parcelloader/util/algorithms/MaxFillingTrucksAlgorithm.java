@@ -1,12 +1,16 @@
 package ru.liga.parcelloader.util.algorithms;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
+import ru.liga.parcelloader.type.annotation.TrucksGenerator;
 import ru.liga.parcelloader.type.model.Truck;
-import ru.liga.parcelloader.type.model.Parcel;
+import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 
 import java.util.*;
 
 @Log4j2
+@Component("maxFilling")
+@TrucksGenerator
 public class MaxFillingTrucksAlgorithm implements LoadingAlgorithm {
     /**
      * {@inheritDoc}
@@ -14,8 +18,8 @@ public class MaxFillingTrucksAlgorithm implements LoadingAlgorithm {
      * Максимальная укомплектовка машин
      * Машин при погрузке может быть неограниченное количество
      */
-    public List<Truck> load(List<Parcel> parcels) {
-        List<Truck> trucks = new ArrayList<>();
+    public List<Truck> load(List<Truck> trucks, List<Parcel> parcels) {
+        trucks.clear();
         trucks.add(new Truck());
 
         parcels.sort(
