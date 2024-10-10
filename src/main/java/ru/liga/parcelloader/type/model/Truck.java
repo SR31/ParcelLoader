@@ -38,6 +38,7 @@ public class Truck {
     }
 
     /**
+     * Автоматически создает грузовик по его содержимому
      *
      * @param grid двумерный массив элементов {@link Character}, представляющих
      *             содержимое машины
@@ -73,14 +74,6 @@ public class Truck {
             this.height = truckDTO.getHeight();
             this.width = truckDTO.getWidth();
         }
-    }
-
-    /**
-     * Возвращает максимальную вместимость машины
-     * @return {@link Integer}
-     */
-    public int getCapacity() {
-        return height * width;
     }
 
     /**
@@ -161,6 +154,6 @@ public class Truck {
                         .map(String::valueOf)
                         .map(line -> "+" + line + "+")
                         .collect(Collectors.joining("\n")) +
-                "\n++++++++";
+                "\n" + "+".repeat(width + 2);
     }
 }

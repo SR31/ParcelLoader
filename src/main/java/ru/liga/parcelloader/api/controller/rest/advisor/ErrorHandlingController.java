@@ -1,6 +1,7 @@
 package ru.liga.parcelloader.api.controller.rest.advisor;
 
 import jakarta.validation.ValidationException;
+import org.postgresql.util.PSQLException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.liga.parcelloader.api.controller.rest.data.ErrorMessage;
 import ru.liga.parcelloader.type.exception.NotSupportedParcelSymbolException;
+import ru.liga.parcelloader.type.exception.ParcelNotFoundException;
 
 import java.time.LocalDateTime;
 
@@ -29,8 +31,12 @@ public class ErrorHandlingController {
                 );
     }
 
-    @ExceptionHandler(NotSupportedParcelSymbolException.class)
-    public ResponseEntity<ErrorMessage> handleErrors(NotSupportedParcelSymbolException exception) {
+    @ExceptionHandler({
+            NotSupportedParcelSymbolException.class,
+            ParcelNotFoundException.class,
+            PSQLException.class
+    })
+    public ResponseEntity<ErrorMessage> handleErrors(RuntimeException exception) {
         return new ResponseEntity<>(
                 ErrorMessage
                         .builder()

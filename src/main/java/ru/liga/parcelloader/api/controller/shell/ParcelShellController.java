@@ -1,5 +1,6 @@
 package ru.liga.parcelloader.api.controller.shell;
 
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellCommandGroup;
@@ -33,30 +34,18 @@ public class ParcelShellController {
     public String rename(
             @ShellOption(value = "--id") int id,
             @ShellOption(value = "--name", defaultValue = "") String name,
-            @ShellOption(value = "--fillingSymbol", defaultValue = "") String fillingSymbol
+            @ShellOption(value = "--fillingSymbol", defaultValue = "")
+            @Size(max = 1)
+            String fillingSymbol
     ) {
-        if (!Objects.equals(fillingSymbol, "")) {
-            if (fillingSymbol.length() != 1) {
-                return "fillingSymbol должен быть представлен строкой длины 1";
-            }
-        }
-
         try {
-            Parcel parcel = parcelService
-                    .update(ParcelDTO
-                                    .builder()
-                                    .name(Objects.equals(name, "") ? null : name)
-                                    .fillingSymbol(
-                                            Objects.equals(fillingSymbol, "")
-                                                    ? null
-                                                    : fillingSymbol.charAt(0)
-                                    ).build(),
-                            id
-                    );
+            Parcel parcel = parcelService.update(
+                    parcelDTOFromParameters(name, fillingSymbol), id
+            );
 
             return "Результат изменения:\n" + parcel.toString();
-        } catch(Exception e) {
-            return "Не удалось обновить данные посылки, проверьте правильность заполнения полей";
+        } catch(RuntimeException e) {
+            return "Не удалось обновить данные посылки: " + e.getMessage();
         }
     }
 
@@ -64,5 +53,16 @@ public class ParcelShellController {
     public String delete(@ShellOption("--id") int id) {
         parcelService.delete(id);
         return "Готово";
+    }
+
+    private ParcelDTO parcelDTOFromParameters(String name, String fillingSymbol) {
+        return ParcelDTO
+                .builder()
+                .name(Objects.equals(name, "") ? null : name)
+                .fillingSymbol(
+                        Objects.equals(fillingSymbol, "")
+                                ? null
+                                : fillingSymbol.charAt(0)
+                ).build();
     }
 }

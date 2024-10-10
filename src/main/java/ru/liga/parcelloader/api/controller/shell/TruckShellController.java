@@ -1,5 +1,6 @@
 package ru.liga.parcelloader.api.controller.shell;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellCommandGroup;
@@ -35,7 +36,8 @@ public class TruckShellController {
 
     @ShellMethod(key = "loadtrucks", value = "Погрузить посылки")
     public String loadTrucks(
-            @ShellOption("--algorithm") String algorithm,
+            @ShellOption("--algorithm")
+            @Pattern(regexp = "(oneToOne|maxFilling|balanced)") String algorithm,
             @ShellOption("--parcelfilepath") String filepath,
             @ShellOption(value = "--trucks", defaultValue = "") String trucks
     ) {

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.liga.parcelloader.api.dto.parcel.ParcelDTO;
 import ru.liga.parcelloader.data.mapper.ParcelMapper;
+import ru.liga.parcelloader.type.exception.ParcelNotFoundException;
 import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 import ru.liga.parcelloader.data.repository.ParcelRepository;
 
@@ -43,8 +44,6 @@ public class ParcelService {
     /**
      * Модифицирует объект {@link Parcel}.
      * <br>
-     * Если объекта с переданным id не существует, то создает новый
-     * с переданными полями.
      * Если объект существует, то результатом изменения будет
      * слияние существующего объекта и переданного
      * (доступно изменение конкретных полей, а не всего объекта).
@@ -57,7 +56,7 @@ public class ParcelService {
         Optional<Parcel> optionalParcel = parcelRepository.findById(id);
 
         if (optionalParcel.isEmpty()) {
-            return create(parcelDTO);
+            throw new ParcelNotFoundException("Посылка с таким id не найдена");
         }
 
         Parcel parcel = optionalParcel.get();

@@ -10,6 +10,14 @@ import java.util.stream.Collectors;
 
 @Component
 public class StringTrucksParser implements TrucksParser<String> {
+    /**
+     * Парсит строку вида 6x6,6x6
+     * <br><br>
+     * @param trucksString строка для парсинга
+     * @return список машин с переданными формами
+     * @throws IllegalArgumentException выбрасывается, если строка
+     * передана в неправильном формате
+     */
     public List<TruckDTO> parse(String trucksString) throws IllegalArgumentException {
         List<String> potentialTrucks = Arrays.stream(trucksString.split("(,+)"))
                 .collect(Collectors.toCollection(ArrayList::new));

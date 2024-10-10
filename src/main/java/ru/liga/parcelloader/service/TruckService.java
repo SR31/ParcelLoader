@@ -26,7 +26,14 @@ public class TruckService {
     @Autowired
     private final ParcelCounter parcelCounter;
 
-
+    /**
+     * Грузит переданные посылки по грузовикам
+     * <br><br>
+     * Поле trucks является обязательным для заполнения, если выбран алгоритм balanced
+     * @param trucksLoadingDTO объект, представляющий данные о посылках и грузовиках
+     * @param loadingAlgorithmName название алгоритма, каким будет осуществляться погрузка
+     * @return список грузовиков с посылками
+     */
     public List<Truck> load(
             TrucksLoadingDTO trucksLoadingDTO,
             String loadingAlgorithmName
@@ -51,9 +58,7 @@ public class TruckService {
     private List<Truck> trucksFromDTO(List<TruckDTO> trucksDTO) {
         return trucksDTO
                 .stream()
-                .map(truckDTO -> new Truck(
-                        truckDTO.getWidth(),
-                        truckDTO.getHeight()
+                .map(truckDTO -> new Truck(truckDTO.getWidth(), truckDTO.getHeight()
                 )).collect(Collectors.toCollection(ArrayList::new));
     }
 
