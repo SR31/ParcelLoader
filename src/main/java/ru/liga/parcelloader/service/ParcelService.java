@@ -65,4 +65,8 @@ public class ParcelService {
 
         return parcelRepository.save(parcel);
     }
+
+    public void delete(int id) {
+        parcelRepository.deleteById(id);
+    }
 }

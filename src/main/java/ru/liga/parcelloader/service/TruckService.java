@@ -13,10 +13,7 @@ import ru.liga.parcelloader.type.model.Truck;
 import ru.liga.parcelloader.util.algorithms.LoadingAlgorithm;
 import ru.liga.parcelloader.util.counters.ParcelCounter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service

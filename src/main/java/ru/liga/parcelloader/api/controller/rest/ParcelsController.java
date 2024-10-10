@@ -1,6 +1,8 @@
 package ru.liga.parcelloader.api.controller.rest;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.liga.parcelloader.api.dto.parcel.ParcelDTO;
 import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
@@ -33,5 +35,10 @@ public class ParcelsController {
     @PatchMapping("/{id}")
     public Parcel update(@PathVariable("id") int id, @RequestBody ParcelDTO parcel) {
         return parcelService.update(parcel, id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") int id) {
+        parcelService.delete(id);
     }
 }
