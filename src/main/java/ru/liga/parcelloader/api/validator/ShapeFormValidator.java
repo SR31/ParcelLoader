@@ -2,12 +2,10 @@ package ru.liga.parcelloader.api.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import jakarta.validation.ConstraintViolationException;
 import ru.liga.parcelloader.api.dto.parcel.LayerDTO;
 import ru.liga.parcelloader.api.dto.parcel.ShapeDTO;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ShapeFormValidator implements ConstraintValidator<ShapeMustBePresentedBySameSymbols, ShapeDTO> {

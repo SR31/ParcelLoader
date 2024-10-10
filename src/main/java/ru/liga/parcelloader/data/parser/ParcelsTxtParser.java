@@ -4,15 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.liga.parcelloader.api.dto.parcel.ParcelDTO;
 import ru.liga.parcelloader.service.ParcelService;
-import ru.liga.parcelloader.type.exception.ParcelNotFound;
-import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @AllArgsConstructor

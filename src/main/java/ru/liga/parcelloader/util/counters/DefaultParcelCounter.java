@@ -5,7 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.liga.parcelloader.data.repository.ParcelRepository;
-import ru.liga.parcelloader.type.exception.NotSupportedParcelSymbol;
+import ru.liga.parcelloader.type.exception.NotSupportedParcelSymbolException;
 import ru.liga.parcelloader.type.model.Truck;
 import ru.liga.parcelloader.type.model.entity.parcel.Layer;
 import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
@@ -38,7 +38,7 @@ public class DefaultParcelCounter implements ParcelCounter {
 
                 Parcel parcel = findParcelByFillingSymbol(potentialParcels, currentChar);
                 if (parcel == null || !isParcelFormCorrectAt(x, y, parcel, truckGrid)) {
-                    throw new NotSupportedParcelSymbol(currentChar);
+                    throw new NotSupportedParcelSymbolException(currentChar);
                 }
 
                 incrementParcelCount(parcelCountsMap, parcel.getName());

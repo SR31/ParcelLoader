@@ -12,7 +12,7 @@ import ru.liga.parcelloader.api.dto.truck.TrucksLoadingDTO;
 import ru.liga.parcelloader.data.parser.FileParser;
 import ru.liga.parcelloader.data.parser.StringTrucksParser;
 import ru.liga.parcelloader.service.TruckService;
-import ru.liga.parcelloader.type.exception.ParcelNotFound;
+import ru.liga.parcelloader.type.exception.ParcelNotFoundException;
 import ru.liga.parcelloader.type.model.Truck;
 
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class TruckShellController {
             parcels = parcelsTxtParser.parse(filepath);
         } catch (IOException e) {
             return "Ошибка чтения файла " + filepath;
-        } catch (ParcelNotFound e) {
+        } catch (ParcelNotFoundException e) {
             return e.getMessage();
         }
 

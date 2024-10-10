@@ -4,7 +4,6 @@ import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.springframework.stereotype.Component;
 import ru.liga.parcelloader.api.dto.parcel.ParcelDTO;
 import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 

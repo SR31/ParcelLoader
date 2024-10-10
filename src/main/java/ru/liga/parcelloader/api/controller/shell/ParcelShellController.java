@@ -7,19 +7,9 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.liga.parcelloader.api.dto.parcel.ParcelDTO;
-import ru.liga.parcelloader.api.dto.truck.TruckDTO;
-import ru.liga.parcelloader.api.dto.truck.TrucksLoadingDTO;
-import ru.liga.parcelloader.data.parser.FileParser;
-import ru.liga.parcelloader.data.parser.ParcelsTxtParser;
-import ru.liga.parcelloader.data.parser.StringTrucksParser;
 import ru.liga.parcelloader.service.ParcelService;
-import ru.liga.parcelloader.service.TruckService;
-import ru.liga.parcelloader.type.model.Truck;
 import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 

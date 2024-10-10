@@ -1,5 +1,6 @@
 package ru.liga.parcelloader.type.model.entity.parcel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +24,7 @@ public class Parcel {
     private String name;
     @Column(name = "filling_symbol", nullable = false, unique = true, length = 1)
     private Character fillingSymbol;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shape_id")
     private Shape shape;
 
@@ -49,6 +50,7 @@ public class Parcel {
                 ).build();
     }
 
+    @JsonIgnore
     public int getWidth() {
         return shape
                 .getLayers()
@@ -59,12 +61,14 @@ public class Parcel {
                 .orElse(0);
     }
 
+    @JsonIgnore
     public int getHeight() {
         return shape
                 .getLayers()
                 .size();
     }
 
+    @JsonIgnore
     public int getWeight() {
         return shape
                 .getLayers()
@@ -78,6 +82,7 @@ public class Parcel {
                 .orElse(0);
     }
 
+    @JsonIgnore
     public Layer getShapeLayer(int index) {
         return shape.getLayers().get(index);
     }

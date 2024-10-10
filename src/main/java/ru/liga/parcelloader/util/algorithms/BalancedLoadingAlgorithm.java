@@ -1,7 +1,7 @@
 package ru.liga.parcelloader.util.algorithms;
 
 import org.springframework.stereotype.Component;
-import ru.liga.parcelloader.type.exception.UnableToLoadParcel;
+import ru.liga.parcelloader.type.exception.UnableToLoadParcelRefactor;
 import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 import ru.liga.parcelloader.type.model.Truck;
 
@@ -37,7 +37,7 @@ public class BalancedLoadingAlgorithm implements LoadingAlgorithm {
             }
 
             if (!isParcelLoaded) {
-                throw new UnableToLoadParcel(
+                throw new UnableToLoadParcelRefactor(
                         "Невозможно загрузить посылку с именем " + parcel.getName()
                 );
             }

@@ -1,8 +1,6 @@
 package ru.liga.parcelloader.api.controller.rest;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.liga.parcelloader.api.dto.parcel.ParcelDTO;
 import ru.liga.parcelloader.type.model.entity.parcel.Parcel;

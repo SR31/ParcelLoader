@@ -4,13 +4,11 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.liga.parcelloader.api.dto.truck.TruckDTO;
 import ru.liga.parcelloader.api.dto.truck.TrucksLoadingDTO;
 import ru.liga.parcelloader.service.TruckService;
 import ru.liga.parcelloader.type.model.Truck;
-import ru.liga.parcelloader.util.algorithms.LoadingAlgorithm;
 
 import java.util.List;
 import java.util.Map;

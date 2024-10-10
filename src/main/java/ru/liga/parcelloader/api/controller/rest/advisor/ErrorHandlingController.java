@@ -7,7 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.liga.parcelloader.api.controller.rest.data.ErrorMessage;
-import ru.liga.parcelloader.type.exception.NotSupportedParcelSymbol;
+import ru.liga.parcelloader.type.exception.NotSupportedParcelSymbolException;
 
 import java.time.LocalDateTime;
 
@@ -29,8 +29,8 @@ public class ErrorHandlingController {
                 );
     }
 
-    @ExceptionHandler(NotSupportedParcelSymbol.class)
-    public ResponseEntity<ErrorMessage> handleErrors(NotSupportedParcelSymbol exception) {
+    @ExceptionHandler(NotSupportedParcelSymbolException.class)
+    public ResponseEntity<ErrorMessage> handleErrors(NotSupportedParcelSymbolException exception) {
         return new ResponseEntity<>(
                 ErrorMessage
                         .builder()
