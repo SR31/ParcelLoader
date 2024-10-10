@@ -1,0 +1,18 @@
+CREATE TABLE IF NOT EXISTS Shape (
+    id SERIAL PRIMARY KEY
+);
+
+CREATE TABLE IF NOT EXISTS Layer (
+    id SERIAL PRIMARY KEY,
+    content TEXT NOT NULL,
+    shape_id INTEGER NOT NULL,
+    FOREIGN KEY (shape_id) REFERENCES Shape (id)
+);
+
+CREATE TABLE IF NOT EXISTS Parcel (
+    id SERIAL PRIMARY KEY,
+    name TEXT UNIQUE NOT NULL,
+    filling_symbol CHAR(1) UNIQUE NOT NULL,
+    shape_id INTEGER NOT NULL,
+    FOREIGN KEY (shape_id) REFERENCES Shape (id)
+);
