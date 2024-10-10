@@ -12,9 +12,11 @@ import ru.liga.parcelloader.api.dto.truck.TruckDTO;
 import ru.liga.parcelloader.api.dto.truck.TrucksLoadingDTO;
 import ru.liga.parcelloader.data.parser.FileParser;
 import ru.liga.parcelloader.data.parser.StringTrucksParser;
+import ru.liga.parcelloader.data.parser.TruckJsonParser;
 import ru.liga.parcelloader.service.TruckService;
 import ru.liga.parcelloader.type.exception.ParcelNotFoundException;
 import ru.liga.parcelloader.type.model.Truck;
+import ru.liga.parcelloader.util.counters.ParcelCounter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,11 +28,15 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class TruckShellController {
     @Autowired
-    TruckService truckService;
+    private final TruckService truckService;
     @Autowired
-    StringTrucksParser stringTrucksParser;
+    private final StringTrucksParser stringTrucksParser;
     @Autowired
-    FileParser<List<ParcelDTO>> parcelsTxtParser;
+    private final FileParser<List<ParcelDTO>> parcelsTxtParser;
+    @Autowired
+    private final TruckJsonParser truckJsonParser;
+    @Autowired
+    private final ParcelCounter parcelCounter;
 
     private List<Truck> trucks;
 
@@ -73,5 +79,16 @@ public class TruckShellController {
                 .stream()
                 .map(Truck::toString)
                 .collect(Collectors.joining("\n\n"));
+    }
+
+    @ShellMethod(key = "countparcels", value = "Посчитать посылки в грузовике")
+    public String countTrucks(@ShellOption("--truckfilepath") String filepath) {
+        try {
+            Truck truck = truckJsonParser.parse(filepath);
+
+            return parcelCounter.countParcelsIn(truck).toString();
+        } catch (IOException e) {
+            return "Ошибка чтения файла " + filepath;
+        }
     }
 }

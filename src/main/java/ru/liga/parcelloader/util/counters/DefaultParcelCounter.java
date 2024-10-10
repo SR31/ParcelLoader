@@ -27,7 +27,6 @@ public class DefaultParcelCounter implements ParcelCounter {
         Map<String, Integer> parcelCountsMap = new HashMap<>();
         log.debug("Initial truck's state\n{}", truck);
         List<Parcel> potentialParcels = getPotentialParcels(truckGrid);
-        potentialParcels.forEach(System.out::println);
 
         for (int y = 0; y < truck.getHeight(); y++) {
             for (int x = 0; x < truck.getWidth(); x++) {
