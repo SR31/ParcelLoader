@@ -24,4 +24,8 @@ public class Layer {
         this.content = layerDTO.getContent();
         this.shapeId = layerDTO.getShapeId();
     }
+
+    public String toString() {
+        return content;
+    }
 }

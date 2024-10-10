@@ -81,4 +81,10 @@ public class Parcel {
     public Layer getShapeLayer(int index) {
         return shape.getLayers().get(index);
     }
+
+    public String toString() {
+        return "name: " + name + "\n" +
+                "fillingSymbol: " + fillingSymbol + "\n" +
+                "shape:\n" + shape.toString();
+    }
 }

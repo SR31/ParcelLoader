@@ -61,9 +61,18 @@ public class Truck {
     }
 
     public Truck(TruckDTO truckDTO) {
-        this.width = truckDTO.getWidth();
-        this.height = truckDTO.getHeight();
-        this.grid = truckDTO.getGrid();
+        if (truckDTO.getGrid() != null) {
+            this.grid = truckDTO.getGrid();
+            this.height = this.grid.length;
+            this.width = this.grid[0].length;
+        } else {
+            this.grid = new char[truckDTO.getHeight()][truckDTO.getWidth()];
+            for (int i = 0; i < truckDTO.getHeight(); i++)
+                for (int j = 0; j < truckDTO.getWidth(); j++)
+                    this.grid[i][j] = ' ';
+            this.height = truckDTO.getHeight();
+            this.width = truckDTO.getWidth();
+        }
     }
 
     /**

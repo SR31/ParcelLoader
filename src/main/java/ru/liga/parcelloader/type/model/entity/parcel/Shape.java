@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -20,4 +21,11 @@ public class Shape {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "shape_id")
     private List<Layer> layers;
+
+    public String toString() {
+        return layers
+                .stream()
+                .map(Layer::toString)
+                .collect(Collectors.joining("\n"));
+    }
 }
