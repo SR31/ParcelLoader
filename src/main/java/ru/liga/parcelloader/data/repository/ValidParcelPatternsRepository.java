@@ -1,6 +1,6 @@
 package ru.liga.parcelloader.data.repository;
 
-import ru.liga.parcelloader.type.model.Parcel;
+import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 
 import java.util.Map;
 

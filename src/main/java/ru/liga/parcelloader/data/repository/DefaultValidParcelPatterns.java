@@ -1,6 +1,6 @@
 package ru.liga.parcelloader.data.repository;
 
-import ru.liga.parcelloader.type.model.Parcel;
+import ru.liga.parcelloader.type.model.entity.parcel.Parcel;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -30,7 +30,7 @@ public class DefaultValidParcelPatterns implements ValidParcelPatternsRepository
     public Map<String, Parcel> getPatterns() {
         return new HashMap<>(availableParcelForms);
     }
-    
+
     @Override
     public Parcel getParcelById(String id) {
         return availableParcelForms.get(id);
